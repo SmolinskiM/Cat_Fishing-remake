@@ -1,0 +1,22 @@
+{
+    "fishName": [
+        "Anglerfish",
+        "Chompy",
+        "Cowfish",
+        "Cuddlefish",
+        "Grumper",
+        "Mustardfish",
+        "Swooper",
+        "Trumble"
+    ],
+    "fishStatus": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        true,
+        false
+    ]
+}
