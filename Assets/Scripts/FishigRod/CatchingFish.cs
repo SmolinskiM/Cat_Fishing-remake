@@ -14,6 +14,7 @@ public class CatchingFish: MonoBehaviour
 
     [SerializeField] private Button makeBait;
     [SerializeField] private Button sellFish;
+    [SerializeField] private Button goToCity;
 
     [SerializeField] private FishSpawner fishSpawner;
 
@@ -38,7 +39,7 @@ public class CatchingFish: MonoBehaviour
     {
         moneyText.gameObject.SetActive(fishingRod.Hook.IsHookOnRod);
 
-        if(fishingRod.Hook.IsHookOnRod && fishingRod.Hook.IsFishOnHook)
+        if (fishingRod.Hook.IsHookOnRod && fishingRod.Hook.IsFishOnHook)
         {
             fish = fishingRod.Hook.gameObject.GetComponentInChildren<Fish>();
 
@@ -85,8 +86,9 @@ public class CatchingFish: MonoBehaviour
         FishSaveMeneger.Instance.SaveData(fish.FishData);
         ShowContentSlotEvent?.Invoke(fish.FishData);
 
-        if(fish == goldFish)
+        if(fish.FishData == goldFish)
         {
+            goToCity.gameObject.SetActive(true);
             fishSpawner.IsPossibleToSpawnGoldFish = false;
             isDialogOpened = false;
         }

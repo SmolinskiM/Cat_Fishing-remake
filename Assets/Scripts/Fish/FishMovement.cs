@@ -6,19 +6,19 @@ public class FishMovement : MonoBehaviour
 {
     [SerializeField] private Hook hook;
     [SerializeField] private Fish fish;
-    
+
     private bool isFishOnHook;
 
     private bool isReachPoint = true;
     private float targetPositionX;
     private float targetPositionY;
-    
+
     private Transform area;
     private Vector2 target;
-    
+
     private const int RANGE = 10;
     private const int FISHSPEED = 10;
-    
+
     public bool IsFishOnHook { get { return isFishOnHook; } set { isFishOnHook = value; } }
     public Vector2 Target { get { return target; } }
     public Transform Area { get { return area; } }
@@ -51,7 +51,7 @@ public class FishMovement : MonoBehaviour
 
         float distanceToBait = Vector2.Distance(transform.position, hook.transform.position);
 
-        if(distanceToBait <= RANGE && hook.Bait.BaitSize != 0 && hook.IsHookInWater)
+        if (distanceToBait <= RANGE && hook.Bait.BaitSize != 0 && hook.IsHookInWater)
         {
             target = hook.transform.position;
         }
@@ -79,7 +79,7 @@ public class FishMovement : MonoBehaviour
     }
 
     private void PointToFishTravel(Vector2 target)
-    { 
+    {
         transform.position = Vector2.MoveTowards(transform.position, target, FISHSPEED * Time.deltaTime);
     }
 }
