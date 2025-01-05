@@ -4,7 +4,8 @@ public class FightWithFish : MonoBehaviour
 {
     [SerializeField] private Hook hook;
     [SerializeField] private GameObject figthCanvas;
-    
+    [SerializeField] private Transform navMesh;
+
     private Fish fish;
     private int direction;
     private readonly float moveSpeedFishUI = 50;
@@ -51,7 +52,7 @@ public class FightWithFish : MonoBehaviour
             hook.IsFishOnHook = false;
             fishMovment.IsFishOnHook = false;
             fishMovment.transform.eulerAngles = Vector3.zero;
-            fishMovment.transform.parent = fishMovment.Area;
+            fishMovment.transform.parent = navMesh;
         }
 
         if (Time.time >= cooldown)

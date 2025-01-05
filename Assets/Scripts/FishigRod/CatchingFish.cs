@@ -93,7 +93,8 @@ public class CatchingFish: MonoBehaviour
             isDialogOpened = false;
         }
 
-        Destroy(fish.gameObject);
+        fish.DestoyFish();
+        //Destroy(fish.gameObject);
     }
 
     public void LetGoGoldFish()

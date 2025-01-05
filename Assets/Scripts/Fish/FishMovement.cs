@@ -13,7 +13,7 @@ public class FishMovement : MonoBehaviour
     private float targetPositionX;
     private float targetPositionY;
 
-    private Transform area;
+    private Transform swimmingArea;
     private Vector2 target;
 
     private const int RANGE = 10;
@@ -21,13 +21,12 @@ public class FishMovement : MonoBehaviour
 
     public bool IsFishOnHook { get { return isFishOnHook; } set { isFishOnHook = value; } }
     public Vector2 Target { get { return target; } }
-    public Transform Area { get { return area; } }
 
     private void Start()
     {
         hook = FindObjectOfType<Hook>();
         fish = GetComponent<Fish>();
-        area = transform.parent;
+        swimmingArea = fish.SpawnerArea.transform;
     }
 
     private void Update()
@@ -44,8 +43,8 @@ public class FishMovement : MonoBehaviour
 
         if (isReachPoint)
         {
-            targetPositionX = Random.Range(area.transform.position.x - area.transform.localScale.x / 2, area.transform.position.x + area.transform.localScale.x / 2);
-            targetPositionY = Random.Range(area.transform.position.y - area.transform.localScale.y / 2, area.transform.position.y + area.transform.localScale.y / 2);
+            targetPositionX = Random.Range(swimmingArea.transform.position.x - swimmingArea.transform.localScale.x / 2, swimmingArea.transform.position.x + swimmingArea.transform.localScale.x / 2);
+            targetPositionY = Random.Range(swimmingArea.transform.position.y - swimmingArea.transform.localScale.y / 2, swimmingArea.transform.position.y + swimmingArea.transform.localScale.y / 2);
             isReachPoint = false;
         }
 

@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -222,7 +221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &125631247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213a648c93697b14f8039e2643128b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishDataList: {fileID: 11400000, guid: 7bf42ca68bad7e64f9f95375b2ceb894, type: 2}
+  fishDataList: {fileID: 11400000, guid: d1702e5f71a8dfa43a447c44a1ea8033, type: 2}
   slotPrefab: {fileID: -3803086407550625088, guid: f8bae5b033becaf4691c7b0541326d10, type: 3}
   content: {fileID: 499303707}
 --- !u!1 &231864986
@@ -809,6 +808,7 @@ MonoBehaviour:
   fishPrefab: {fileID: 3961077801025956262, guid: 2132d595ae5f82e49a4611a89aaa06e6, type: 3}
   goldFish: {fileID: 0}
   NPCConversation: {fileID: 0}
+  fishParent: {fileID: 125631249}
 --- !u!61 &254696738
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -907,6 +907,7 @@ MonoBehaviour:
   fishPrefab: {fileID: 3961077801025956262, guid: 2132d595ae5f82e49a4611a89aaa06e6, type: 3}
   goldFish: {fileID: 0}
   NPCConversation: {fileID: 0}
+  fishParent: {fileID: 125631249}
 --- !u!61 &290584962
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2335,6 +2336,7 @@ MonoBehaviour:
   fishPrefab: {fileID: 3961077801025956262, guid: 2132d595ae5f82e49a4611a89aaa06e6, type: 3}
   goldFish: {fileID: 0}
   NPCConversation: {fileID: 0}
+  fishParent: {fileID: 125631249}
 --- !u!61 &844732741
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3464,6 +3466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hook: {fileID: 299322378}
   figthCanvas: {fileID: 1594001235}
+  navMesh: {fileID: 125631249}
 --- !u!1 &1104559370
 GameObject:
   m_ObjectHideFlags: 0
@@ -5369,6 +5372,7 @@ MonoBehaviour:
   fishPrefab: {fileID: 3961077801025956262, guid: 2132d595ae5f82e49a4611a89aaa06e6, type: 3}
   goldFish: {fileID: 11400000, guid: a6fdbe09f7740054598cb88c7a58aefa, type: 2}
   NPCConversation: {fileID: 0}
+  fishParent: {fileID: 125631249}
 --- !u!61 &1724459817
 BoxCollider2D:
   m_ObjectHideFlags: 0

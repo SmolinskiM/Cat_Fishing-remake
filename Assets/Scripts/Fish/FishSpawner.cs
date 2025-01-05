@@ -17,25 +17,34 @@ public class FishSpawner : MonoBehaviour
 
     [SerializeField] private NPCConversation NPCConversation;
 
+    [SerializeField] private Transform fishParent;
+
     private bool isGoldenFishSpawned;
-    
-    private int fishCurrent;
+
     private int fishToSpawnGold;
 
+    private ObjectPool<Fish> fishPool;
+
     public bool IsPossibleToSpawnGoldFish { get { return isPossibleToSpawnGoldFish; } set { isPossibleToSpawnGoldFish = value; } }
+    public ObjectPool<Fish> FishPool { get {  return fishPool; } }
 
-    private void Update()
+    private void Awake()
     {
-        fishCurrent = transform.childCount;
+        fishPool = new ObjectPool<Fish>(fishPrefab, transform);
+        fishPool.OnRealeaseObject += DecideWhatFishSpawn;
+    }
 
-        if (fishCurrent < fishMax)
+    private void Start()
+    {
+        for(int i = 0; i < fishMax; i++)
         {
             DecideWhatFishSpawn();
         }
     }
 
-    private void DecideWhatFishSpawn()
+    public void DecideWhatFishSpawn()
     {
+        Debug.Log("XD");
         int fishRandom = Random.Range(0, fish.Length);
 
         foreach(FishData fishData in fish)
@@ -43,6 +52,7 @@ public class FishSpawner : MonoBehaviour
             if(fishData == goldFish)
             {
                 isGoldenFishSpawned = true;
+                break;
             }
         }
 
@@ -69,9 +79,9 @@ public class FishSpawner : MonoBehaviour
     {
         float positionX = Random.Range(gameObject.transform.position.x - gameObject.transform.localScale.x / 2, gameObject.transform.position.x + gameObject.transform.localScale.x / 2);
         float positionY = Random.Range(gameObject.transform.position.y - gameObject.transform.localScale.y / 2, gameObject.transform.position.y + gameObject.transform.localScale.y / 2);
-        Fish fishNew = Instantiate(fishPrefab, new Vector3(positionX, positionY, 0), Quaternion.identity);
-
-        //Fish fishNew = Instantiate(fishPrefab, new Vector3(positionX, positionY, 0), Quaternion.identity);
-        fishNew.FishSetup(fishData, transform);
+        Fish fishNew = fishPool.OnTake(); 
+        fishNew.transform.position = new Vector3(positionX, positionY, 0);
+        fishNew.transform.parent = fishParent;
+        fishNew.FishSetup(fishData, this, fishParent);
     }
 }
