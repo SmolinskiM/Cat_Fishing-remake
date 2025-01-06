@@ -16,7 +16,22 @@ public class FightWithFish : MonoBehaviour
     private const float FAST_AREA = 20;
     private const float BREAK_AREA = 80;
 
+    private PlayerAction moveAction;
+
     public float FishPosition { get { return fishPosition; } }
+
+    public float InputValue { get; private set; }  // Nowa publiczna właściwość dla wejścia
+
+    private void OnEnable()
+    {
+        moveAction = new PlayerAction();
+        moveAction.Rod.FightWithFish.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.Disable();
+    }
 
     private void Update()
     {
@@ -31,11 +46,14 @@ public class FightWithFish : MonoBehaviour
             fishPosition = 0;
             figthCanvas.SetActive(false);
         }
+
+        // Zapisanie wartości wejściowej do publicznej właściwości
+        InputValue = moveAction.Rod.FightWithFish.ReadValue<float>();
     }
 
     private void Fight()
     {
-        if(Mathf.Abs(FishPosition) <= FAST_AREA)
+        if (Mathf.Abs(FishPosition) <= FAST_AREA)
         {
             hook.RollingUp(MOVE_SPEED * 1.5f);
         }
@@ -44,15 +62,15 @@ public class FightWithFish : MonoBehaviour
             hook.RollingUp(MOVE_SPEED);
         }
 
-        if(Mathf.Abs(FishPosition) >= BREAK_AREA)
+        if (Mathf.Abs(FishPosition) >= BREAK_AREA)
         {
-            FishMovement fishMovment;
+            FishMovement fishMovement;
 
-            fishMovment = hook.GetComponentInChildren<FishMovement>();
+            fishMovement = hook.GetComponentInChildren<FishMovement>();
             hook.IsFishOnHook = false;
-            fishMovment.IsFishOnHook = false;
-            fishMovment.transform.eulerAngles = Vector3.zero;
-            fishMovment.transform.parent = navMesh;
+            fishMovement.IsFishOnHook = false;
+            fishMovement.transform.eulerAngles = Vector3.zero;
+            fishMovement.transform.parent = navMesh;
         }
 
         if (Time.time >= cooldown)
@@ -62,6 +80,6 @@ public class FightWithFish : MonoBehaviour
         }
 
         fishPosition += (moveSpeedFishUI * (int)fish.FishData.FishSize * direction) * Time.deltaTime;
-        fishPosition += Input.GetAxis("Horizontal") * 200 * Time.deltaTime;
+        fishPosition += InputValue * 200 * Time.deltaTime;
     }
 }

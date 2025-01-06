@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class OpenCatalogManager : MonoBehaviour
 {    
@@ -9,6 +11,15 @@ public class OpenCatalogManager : MonoBehaviour
     private bool isCatalogOpen;
 
     public bool IsCatalogOpen { get { return isCatalogOpen; } }
+
+    private PlayerAction inputActions;
+
+    private void Awake()
+    {
+        inputActions = new PlayerAction();
+        inputActions.UI.Enable();
+        inputActions.UI.OpenCataloge.performed += OpenCatalog;
+    }
 
     private void Start()
     {
@@ -21,15 +32,15 @@ public class OpenCatalogManager : MonoBehaviour
         {
             return;
         }
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            OpenCatalog();
-        }
     }
 
-    private void OpenCatalog()
+    private void OpenCatalog(InputAction.CallbackContext context)
     {
+        if (!FishingRod.Instance.Hook.IsHookOnRod)
+        {
+            return;
+        }
+
         isCatalogOpen = !isCatalogOpen;
         fishCatalog.SetActive(isCatalogOpen);
     }

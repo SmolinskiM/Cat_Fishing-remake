@@ -4,22 +4,32 @@ using UnityEngine.UI;
 public class FishingRodUI : MonoBehaviour
 {
     [SerializeField] private GameObject powerBarCanvas;
-
     [SerializeField] private Slider powerBar;
-
     [SerializeField] private FishingRod fishingRod;
+
+    private void OnEnable()
+    {
+        fishingRod.OnThrowableChanged += HandleThrowableChanged;
+    }
+
+    private void OnDisable()
+    {
+        fishingRod.OnThrowableChanged -= HandleThrowableChanged;
+    }
 
     private void Update()
     {
-        if(!fishingRod.IsThrowable)
+        if (powerBarCanvas.activeSelf)
         {
-            powerBarCanvas.SetActive(false);
+            // Aktualizuje wartość paska mocy
+            float currentPower = (Time.time - fishingRod.PressTimeStart) / fishingRod.MaxPower;
+            powerBar.value = Mathf.Clamp01(currentPower);
         }
-        else
-        {
-            powerBarCanvas.SetActive(true);
-        }
+    }
 
-        powerBar.value = (Time.time - fishingRod.PressTimeStart) / fishingRod.MaxPower;
+    private void HandleThrowableChanged(bool isThrowable)
+    {
+        // Włącza lub wyłącza widoczność paska mocy
+        powerBarCanvas.SetActive(isThrowable);
     }
 }

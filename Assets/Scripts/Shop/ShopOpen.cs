@@ -1,36 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class ShopOpen : MonoBehaviour
 {
     [SerializeField] private Text shopText;
     [SerializeField] private GameObject shop;
-    
+
     private bool isShopOpen;
 
     public bool IsShopOpen { get { return isShopOpen; } }
 
-    private void Update()
+    // InputAction do otwierania sklepu
+    private PlayerAction openShopAction;
+
+    private void OnEnable()
     {
-        OpenShop();
+        openShopAction = new PlayerAction();
+        openShopAction.UI.OpenShop.Enable();
+        // Zakładając, że masz "OpenShop" przypisane do akcji w Input Actions
+        openShopAction.UI.OpenShop.performed += OpenShop;
     }
 
-    private void OpenShop()
+    private void OnDisable()
     {
-        if (FishingRod.Instance.Hook.IsHookOnRod)
+        openShopAction.Disable();
+    }
+
+    private void OpenShop(InputAction.CallbackContext context)
+    {
+        if(!FishingRod.Instance.Hook.IsHookOnRod)
         {
-            if (Input.GetKeyDown("p"))
-            {
-                isShopOpen = !isShopOpen;
-                shop.SetActive(isShopOpen);
-            }
-            shopText.gameObject.SetActive(!isShopOpen);
+            return;
         }
-        else
-        {
-            isShopOpen = false;
-            shop.SetActive(isShopOpen);
-            shopText.gameObject.SetActive(isShopOpen);
-        }
+
+        isShopOpen = !isShopOpen;
+        shop.SetActive(isShopOpen);
+        shopText.gameObject.SetActive(!isShopOpen);
     }
 }
