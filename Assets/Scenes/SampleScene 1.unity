@@ -1920,6 +1920,7 @@ GameObject:
   - component: {fileID: 641946991}
   - component: {fileID: 641946994}
   - component: {fileID: 641946993}
+  - component: {fileID: 641946995}
   m_Layer: 0
   m_Name: GameMenager
   m_TagString: Untagged
@@ -1941,6 +1942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopText: {fileID: 1968980365}
   shop: {fileID: 170073114}
+  mediator: {fileID: 641946995}
 --- !u!4 &641946992
 Transform:
   m_ObjectHideFlags: 0
@@ -1985,6 +1987,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishCatalog: {fileID: 215945851}
+  mediator: {fileID: 641946995}
+--- !u!114 &641946995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641946990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0302dbd2b7647241be956fba76bfb6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &679194278
 GameObject:
   m_ObjectHideFlags: 0
@@ -5621,9 +5636,8 @@ MonoBehaviour:
   hook: {fileID: 299322378}
   pointRod: {fileID: 1426343156}
   pointHook: {fileID: 299322376}
-  shopOpen: {fileID: 641946991}
-  catalogManager: {fileID: 641946994}
   hookRb: {fileID: 299322374}
+  mediator: {fileID: 641946995}
 --- !u!114 &1739192325
 MonoBehaviour:
   m_ObjectHideFlags: 0

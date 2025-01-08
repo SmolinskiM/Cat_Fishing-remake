@@ -7,9 +7,8 @@ public class ShopOpen : MonoBehaviour
     [SerializeField] private Text shopText;
     [SerializeField] private GameObject shop;
 
-    private bool isShopOpen;
-
-    public bool IsShopOpen { get { return isShopOpen; } }
+    [SerializeField] private ActionMediator mediator;
+    public bool IsShopOpen { get { return shop.activeSelf; } }
 
     // InputAction do otwierania sklepu
     private PlayerAction openShopAction;
@@ -29,13 +28,12 @@ public class ShopOpen : MonoBehaviour
 
     private void OpenShop(InputAction.CallbackContext context)
     {
-        if(!FishingRod.Instance.Hook.IsHookOnRod)
+        if(!mediator.IsActionAllowed() && !IsShopOpen)
         {
             return;
         }
-
-        isShopOpen = !isShopOpen;
-        shop.SetActive(isShopOpen);
-        shopText.gameObject.SetActive(!isShopOpen);
+        mediator.SetActionAllowed(IsShopOpen);
+        shop.SetActive(!IsShopOpen);
+        shopText.gameObject.SetActive(!IsShopOpen);
     }
 }

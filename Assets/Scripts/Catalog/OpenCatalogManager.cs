@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class OpenCatalogManager : MonoBehaviour
 {    
     [SerializeField] private GameObject fishCatalog;
-    
-    private bool isCatalogOpen;
 
-    public bool IsCatalogOpen { get { return isCatalogOpen; } }
+    [SerializeField] private ActionMediator mediator;
+
+    public bool IsCatalogOpen { get { return fishCatalog.activeSelf; } }
 
     private PlayerAction inputActions;
 
     private void Awake()
     {
         inputActions = new PlayerAction();
-        inputActions.UI.Enable();
+        inputActions.UI.OpenCataloge.Enable();
         inputActions.UI.OpenCataloge.performed += OpenCatalog;
     }
 
@@ -26,22 +27,13 @@ public class OpenCatalogManager : MonoBehaviour
         fishCatalog.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (!FishingRod.Instance.Hook.IsHookOnRod)
-        {
-            return;
-        }
-    }
-
     private void OpenCatalog(InputAction.CallbackContext context)
     {
-        if (!FishingRod.Instance.Hook.IsHookOnRod)
+        if (!mediator.IsActionAllowed() && !IsCatalogOpen)
         {
             return;
         }
-
-        isCatalogOpen = !isCatalogOpen;
-        fishCatalog.SetActive(isCatalogOpen);
+        mediator.SetActionAllowed(IsCatalogOpen);
+        fishCatalog.SetActive(!IsCatalogOpen);
     }
 }

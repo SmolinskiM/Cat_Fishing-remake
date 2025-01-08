@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Hook : MonoBehaviour
 {
+    public Action onHookBackToRodFree;
+
     [SerializeField] private Bait bait;
     [SerializeField] private GameObject water;
     [SerializeField] private Transform positionRod;
@@ -80,6 +83,12 @@ public class Hook : MonoBehaviour
 
         isHookOnRod = true;
         isHookInWater = false;
+
+        if(!isFishOnHook)
+        {
+            onHookBackToRodFree?.Invoke();
+        }
+
     }
 
     public void RollingUp(float speed)

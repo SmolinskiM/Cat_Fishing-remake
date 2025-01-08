@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,11 +8,11 @@ public class FishingRod : SingletoneMonobehaviour<FishingRod>
     [SerializeField] private Hook hook;
     [SerializeField] private Transform pointRod;
     [SerializeField] private Transform pointHook;
-    [SerializeField] private ShopOpen shopOpen;
-    [SerializeField] private OpenCatalogManager catalogManager;
     [SerializeField] private Rigidbody2D hookRb;
 
-    private bool isThrowable;
+    [SerializeField] private ActionMediator mediator;
+
+    private bool isThrowIsCharge;
     private float pressTimeStart;
     private float maxDistance = 70;
     private LineRenderer lr;
@@ -21,10 +22,12 @@ public class FishingRod : SingletoneMonobehaviour<FishingRod>
 
     // Properties
     public float MaxPower { get { return MAX_POWER; } }
-    public bool IsThrowable { get { return isThrowable; } }
+    //public bool IsThrowable { get { return isThrowable; } }
     public float PressTimeStart { get { return pressTimeStart; } }
     public float MaxDistance { get { return maxDistance; } set { maxDistance = value; } }
     public Hook Hook { get { return hook; } }
+
+    public ActionMediator Mediator { get { return mediator; } }
 
     // Event for throwable state changes
     public event Action<bool> OnThrowableChanged;
@@ -33,6 +36,7 @@ public class FishingRod : SingletoneMonobehaviour<FishingRod>
 
     private new void Awake()
     {
+        hook.onHookBackToRodFree += HookBackToRod;
         // Initialize components
         lr = GetComponent<LineRenderer>();
         throwHook = new PlayerAction();
@@ -48,12 +52,6 @@ public class FishingRod : SingletoneMonobehaviour<FishingRod>
         hook.IsHookOnRod = true;
     }
 
-    private void Update()
-    {
-        // Enable/disable the throw functionality based on the UI state
-        EnableTrowHook();
-    }
-
     private void LateUpdate()
     {
         // Draw the rope between rod and hook
@@ -62,35 +60,36 @@ public class FishingRod : SingletoneMonobehaviour<FishingRod>
 
     #region Hook Throwing Logic
 
-    private void EnableTrowHook()
+    private void OnThrowStarted(InputAction.CallbackContext context)
     {
-        // Disable throwing functionality if shop or catalog is open
-        if (shopOpen.IsShopOpen || catalogManager.IsCatalogOpen)
+        if(!mediator.IsActionAllowed())
         {
-            isThrowable = false;
             return;
         }
 
-        // Enable throwing if hook is on rod and no fish is on the hook
-        if (hook.IsHookOnRod && !hook.IsFishOnHook)
-        {
-            isThrowable = true;
-        }
-    }
-
-    private void OnThrowStarted(InputAction.CallbackContext context)
-    {
         // Start tracking press time when throwing begins
-        if (!isThrowable || !hook.IsHookOnRod) return;
+        if (!hook.IsHookOnRod)
+        {
+            return;
+        }
 
+        mediator.SetActionAllowed(false);
+        isThrowIsCharge = true;
         pressTimeStart = Time.time;
         OnThrowableChanged?.Invoke(true);  // Show power bar
     }
 
     private void OnThrowReleased(InputAction.CallbackContext context)
     {
+        if(!isThrowIsCharge && !mediator.IsActionAllowed())
+        {
+            return;
+        }
         // Handle throw logic when button is released
-        if (!isThrowable || !hook.IsHookOnRod) return;
+        if (!hook.IsHookOnRod)
+        {
+            return;
+        }
 
         float power = Time.time - pressTimeStart;
 
@@ -104,7 +103,7 @@ public class FishingRod : SingletoneMonobehaviour<FishingRod>
 
         // Reset states
         pressTimeStart = 0;
-        isThrowable = false;
+        isThrowIsCharge = false;
         hook.IsHookOnRod = false;
 
         OnThrowableChanged?.Invoke(false); // Hide power bar
@@ -124,6 +123,11 @@ public class FishingRod : SingletoneMonobehaviour<FishingRod>
         // Apply force to the hook
         hookRb.gravityScale = 1;
         hookRb.AddForce(new Vector2(300, 100) * power);
+    }
+
+    private void HookBackToRod()
+    {
+        mediator.SetActionAllowed(true);
     }
 
     #endregion

@@ -93,6 +93,7 @@ public class CatchingFish: MonoBehaviour
             isDialogOpened = false;
         }
 
+        fishingRod.Mediator.SetActionAllowed(true);
         fish.DestoyFish();
         //Destroy(fish.gameObject);
     }
