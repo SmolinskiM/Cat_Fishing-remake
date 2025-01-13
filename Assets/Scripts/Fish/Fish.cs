@@ -1,5 +1,4 @@
-﻿using DialogueEditor;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -22,8 +21,10 @@ public class Fish : MonoBehaviour
         this.fish = fish;
         this.fishParent = fishParent;
         
+        transform.parent = fishParent;
+
         spawnerArea = spawner;
-        
+
         if ((int)fish.FishSize == 3)
         {
             transform.localScale *= 1.5f;

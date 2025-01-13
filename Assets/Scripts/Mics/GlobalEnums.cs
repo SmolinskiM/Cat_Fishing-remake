@@ -5,3 +5,8 @@
     Large
 }
 
+public enum PACMAN_GameResult
+{
+    Win,
+    Loose
+}

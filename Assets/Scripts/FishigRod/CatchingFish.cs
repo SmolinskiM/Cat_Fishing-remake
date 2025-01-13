@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DialogueEditor;
-
 public class CatchingFish: MonoBehaviour
 {
     public delegate void ShowContentSlot(FishData fishData);
@@ -20,7 +18,7 @@ public class CatchingFish: MonoBehaviour
 
     [SerializeField] private FishData goldFish;
 
-    [SerializeField] private NPCConversation npcConversation;
+    [SerializeField] private DialogManager dialogManager;
 
     private bool isDialogOpened;
 
@@ -50,7 +48,7 @@ public class CatchingFish: MonoBehaviour
                     return;
                 }
 
-                ConversationManager.Instance.StartConversation(npcConversation);
+                //start spiking with fish
                 isDialogOpened = true;
             }
             else

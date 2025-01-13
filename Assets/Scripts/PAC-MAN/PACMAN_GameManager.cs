@@ -1,10 +1,12 @@
-using DialogueEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PACMAN_GameManager : MonoBehaviour
 {
+    public Action<PACMAN_GameResult> onGameEnd;
+
     [SerializeField] private Transform pointHolder;
 
     [SerializeField] private Transform pointHolderBackup;
@@ -15,9 +17,7 @@ public class PACMAN_GameManager : MonoBehaviour
 
     [SerializeField] private GameObject Game;
 
-    [SerializeField] private NPCConversation win;
-
-    [SerializeField] private NPCConversation loose;
+    [SerializeField] private DialogManager dialogManager;
 
     public bool isPlayerPlay;
 
@@ -50,13 +50,14 @@ public class PACMAN_GameManager : MonoBehaviour
     {
         isPlayerPlay = false;
         Game.SetActive(false);
-        ConversationManager.Instance.StartConversation(loose);
+        onGameEnd?.Invoke(PACMAN_GameResult.Loose);
+        
     }    
 
     private void WinGame()
     {
         isPlayerPlay = false;
         Game.SetActive(false);
-        ConversationManager.Instance.StartConversation(win);
+        onGameEnd?.Invoke(PACMAN_GameResult.Win);
     }
 }

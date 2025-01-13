@@ -171,6 +171,104 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "FishSeller",
+            "id": "18c15e4a-5dcb-4c34-9a67-6574074b5a68",
+            "actions": [
+                {
+                    "name": "ClikckOnFishSeller",
+                    "type": "Button",
+                    "id": "3ac619b6-b8f2-45e7-83d4-e645a6c9b55f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "91c0fdfb-1b62-4290-bcf2-76e0bf7589f7",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "872d3cc1-0aa5-4468-96ec-0666c258f172",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClikckOnFishSeller",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e6ce022-60eb-455b-b874-b7dd4d02d271",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PAC-MAN",
+            "id": "01d7560d-c7ed-4284-bbae-69ca98e4f371",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "73895a16-67f8-4c87-ac6d-4d064bcf22fe",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Two Modifiers",
+                    "id": "d67fc120-f514-4904-9c8e-dcefe5d63e1a",
+                    "path": "TwoModifiers",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier1",
+                    "id": "2934e5ee-ba27-4243-9a91-868e33fb68eb",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "modifier2",
+                    "id": "ee561134-c70c-4ecc-b658-99e7e10c6d4c",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": []

@@ -10,6 +10,14 @@ public class PACMAN_Player : MonoBehaviour
 
     private Rigidbody2D rb2d;
 
+    private PlayerAction movement;
+
+    private void Awake()
+    {
+        movement = new PlayerAction();
+        movement.PACMAN.Move.Enable();
+    }
+
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -17,9 +25,8 @@ public class PACMAN_Player : MonoBehaviour
 
     private void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        rb2d.velocity = new Vector2(moveHorizontal * speed, moveVertical * speed);
+        Vector2 moveDirection = movement.PACMAN.Move.ReadValue<Vector2>();
+        rb2d.velocity = new Vector2(moveDirection.x * speed, moveDirection.y * speed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class FishMovement : MonoBehaviour
 {
     [SerializeField] private Hook hook;
@@ -16,6 +16,8 @@ public class FishMovement : MonoBehaviour
     private Transform swimmingArea;
     private Vector2 target;
 
+    private NavMeshAgent agent;
+
     private const int RANGE = 10;
     private const int FISHSPEED = 10;
 
@@ -24,6 +26,7 @@ public class FishMovement : MonoBehaviour
 
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         hook = FindObjectOfType<Hook>();
         fish = GetComponent<Fish>();
         swimmingArea = fish.SpawnerArea.transform;

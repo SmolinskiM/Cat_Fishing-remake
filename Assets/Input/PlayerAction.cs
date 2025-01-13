@@ -193,6 +193,104 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""FishSeller"",
+            ""id"": ""18c15e4a-5dcb-4c34-9a67-6574074b5a68"",
+            ""actions"": [
+                {
+                    ""name"": ""ClikckOnFishSeller"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ac619b6-b8f2-45e7-83d4-e645a6c9b55f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""91c0fdfb-1b62-4290-bcf2-76e0bf7589f7"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""872d3cc1-0aa5-4468-96ec-0666c258f172"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ClikckOnFishSeller"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e6ce022-60eb-455b-b874-b7dd4d02d271"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""PAC-MAN"",
+            ""id"": ""01d7560d-c7ed-4284-bbae-69ca98e4f371"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""73895a16-67f8-4c87-ac6d-4d064bcf22fe"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Two Modifiers"",
+                    ""id"": ""d67fc120-f514-4904-9c8e-dcefe5d63e1a"",
+                    ""path"": ""TwoModifiers"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier1"",
+                    ""id"": ""2934e5ee-ba27-4243-9a91-868e33fb68eb"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""modifier2"",
+                    ""id"": ""ee561134-c70c-4ecc-b658-99e7e10c6d4c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -206,12 +304,21 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_OpenCataloge = m_UI.FindAction("OpenCataloge", throwIfNotFound: true);
         m_UI_OpenShop = m_UI.FindAction("OpenShop", throwIfNotFound: true);
+        // FishSeller
+        m_FishSeller = asset.FindActionMap("FishSeller", throwIfNotFound: true);
+        m_FishSeller_ClikckOnFishSeller = m_FishSeller.FindAction("ClikckOnFishSeller", throwIfNotFound: true);
+        m_FishSeller_MousePosition = m_FishSeller.FindAction("MousePosition", throwIfNotFound: true);
+        // PAC-MAN
+        m_PACMAN = asset.FindActionMap("PAC-MAN", throwIfNotFound: true);
+        m_PACMAN_Move = m_PACMAN.FindAction("Move", throwIfNotFound: true);
     }
 
     ~@PlayerAction()
     {
         UnityEngine.Debug.Assert(!m_Rod.enabled, "This will cause a leak and performance issues, PlayerAction.Rod.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerAction.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_FishSeller.enabled, "This will cause a leak and performance issues, PlayerAction.FishSeller.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_PACMAN.enabled, "This will cause a leak and performance issues, PlayerAction.PACMAN.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -385,6 +492,106 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // FishSeller
+    private readonly InputActionMap m_FishSeller;
+    private List<IFishSellerActions> m_FishSellerActionsCallbackInterfaces = new List<IFishSellerActions>();
+    private readonly InputAction m_FishSeller_ClikckOnFishSeller;
+    private readonly InputAction m_FishSeller_MousePosition;
+    public struct FishSellerActions
+    {
+        private @PlayerAction m_Wrapper;
+        public FishSellerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ClikckOnFishSeller => m_Wrapper.m_FishSeller_ClikckOnFishSeller;
+        public InputAction @MousePosition => m_Wrapper.m_FishSeller_MousePosition;
+        public InputActionMap Get() { return m_Wrapper.m_FishSeller; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FishSellerActions set) { return set.Get(); }
+        public void AddCallbacks(IFishSellerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_FishSellerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_FishSellerActionsCallbackInterfaces.Add(instance);
+            @ClikckOnFishSeller.started += instance.OnClikckOnFishSeller;
+            @ClikckOnFishSeller.performed += instance.OnClikckOnFishSeller;
+            @ClikckOnFishSeller.canceled += instance.OnClikckOnFishSeller;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
+        }
+
+        private void UnregisterCallbacks(IFishSellerActions instance)
+        {
+            @ClikckOnFishSeller.started -= instance.OnClikckOnFishSeller;
+            @ClikckOnFishSeller.performed -= instance.OnClikckOnFishSeller;
+            @ClikckOnFishSeller.canceled -= instance.OnClikckOnFishSeller;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
+        }
+
+        public void RemoveCallbacks(IFishSellerActions instance)
+        {
+            if (m_Wrapper.m_FishSellerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IFishSellerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_FishSellerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_FishSellerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public FishSellerActions @FishSeller => new FishSellerActions(this);
+
+    // PAC-MAN
+    private readonly InputActionMap m_PACMAN;
+    private List<IPACMANActions> m_PACMANActionsCallbackInterfaces = new List<IPACMANActions>();
+    private readonly InputAction m_PACMAN_Move;
+    public struct PACMANActions
+    {
+        private @PlayerAction m_Wrapper;
+        public PACMANActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_PACMAN_Move;
+        public InputActionMap Get() { return m_Wrapper.m_PACMAN; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PACMANActions set) { return set.Get(); }
+        public void AddCallbacks(IPACMANActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PACMANActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PACMANActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+        }
+
+        private void UnregisterCallbacks(IPACMANActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+        }
+
+        public void RemoveCallbacks(IPACMANActions instance)
+        {
+            if (m_Wrapper.m_PACMANActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPACMANActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PACMANActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PACMANActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PACMANActions @PACMAN => new PACMANActions(this);
     public interface IRodActions
     {
         void OnThrowHook(InputAction.CallbackContext context);
@@ -395,5 +602,14 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     {
         void OnOpenCataloge(InputAction.CallbackContext context);
         void OnOpenShop(InputAction.CallbackContext context);
+    }
+    public interface IFishSellerActions
+    {
+        void OnClikckOnFishSeller(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
+    }
+    public interface IPACMANActions
+    {
+        void OnMove(InputAction.CallbackContext context);
     }
 }

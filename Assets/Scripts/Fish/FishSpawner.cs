@@ -1,5 +1,4 @@
-﻿using DialogueEditor;
-using NavMeshPlus.Components;
+﻿using NavMeshPlus.Components;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +13,6 @@ public class FishSpawner : MonoBehaviour
     [SerializeField] private Fish fishPrefab;
 
     [SerializeField] private FishData goldFish;
-
-    [SerializeField] private NPCConversation NPCConversation;
 
     [SerializeField] private Transform fishParent;
 
@@ -44,7 +41,7 @@ public class FishSpawner : MonoBehaviour
 
     public void DecideWhatFishSpawn()
     {
-        Debug.Log("XD");
+
         int fishRandom = Random.Range(0, fish.Length);
 
         foreach(FishData fishData in fish)
@@ -81,7 +78,6 @@ public class FishSpawner : MonoBehaviour
         float positionY = Random.Range(gameObject.transform.position.y - gameObject.transform.localScale.y / 2, gameObject.transform.position.y + gameObject.transform.localScale.y / 2);
         Fish fishNew = fishPool.OnTake(); 
         fishNew.transform.position = new Vector3(positionX, positionY, 0);
-        fishNew.transform.parent = fishParent;
         fishNew.FishSetup(fishData, this, fishParent);
     }
 }
