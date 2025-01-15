@@ -14,7 +14,15 @@ public class DisplayDescription: MonoBehaviour, IPointerEnterHandler, IPointerEx
     private Vector3 ofset;
     private RectTransform rectTransform;
 
+    private PlayerAction mousePositionAction;
+
     public bool IsMouseOn { get { return isMouseOn; } }
+
+    private void Awake()
+    {
+        mousePositionAction = new PlayerAction();
+        mousePositionAction.UI.MousePosition.Enable();
+    }
 
     private void Start()
     {
@@ -43,8 +51,9 @@ public class DisplayDescription: MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void TextOnMouse()
     {
-        ofset = new Vector3(rectTransform.rect.width /2, 0, 0);
         descriptionText.text = upgrades.Description;
-        descriptionBg.transform.position = Input.mousePosition + ofset;
+        ofset = new Vector3(rectTransform.rect.width, 0, 0);
+        Vector3 mousePosition = mousePositionAction.UI.MousePosition.ReadValue<Vector2>();
+        descriptionBg.transform.position = mousePosition + ofset;
     }
 }

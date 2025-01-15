@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UpgradesData : ScriptableObject
 {
     [SerializeField] private string description;
-    
+
     [SerializeField] private int price;
     [SerializeField] private int levelUpgradeMax;
 

@@ -25,6 +25,10 @@ public class CatchingFish: MonoBehaviour
     private Fish fish;
     private FishingRod fishingRod;
 
+    [Header("Dialog Option")]
+
+    private DialogData catchingGoldFish;
+
     private void Start()
     {
         makeBait.onClick.AddListener(MakeBait);
@@ -47,8 +51,9 @@ public class CatchingFish: MonoBehaviour
                 {
                     return;
                 }
-
-                //start spiking with fish
+                dialogManager.StartDialog(catchingGoldFish);
+                dialogManager.onNextButtonClicked += LetGoGoldFish;
+                dialogManager.onAltButtonClicked += DestroyFish;
                 isDialogOpened = true;
             }
             else

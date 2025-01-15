@@ -167,6 +167,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""272f54ad-5805-40de-90ec-4d9fe0b55155"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -189,6 +198,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenShop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd912b29-c248-4aba-9c81-ba5ca4e9c0fb"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -304,6 +324,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_OpenCataloge = m_UI.FindAction("OpenCataloge", throwIfNotFound: true);
         m_UI_OpenShop = m_UI.FindAction("OpenShop", throwIfNotFound: true);
+        m_UI_MousePosition = m_UI.FindAction("MousePosition", throwIfNotFound: true);
         // FishSeller
         m_FishSeller = asset.FindActionMap("FishSeller", throwIfNotFound: true);
         m_FishSeller_ClikckOnFishSeller = m_FishSeller.FindAction("ClikckOnFishSeller", throwIfNotFound: true);
@@ -444,12 +465,14 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_OpenCataloge;
     private readonly InputAction m_UI_OpenShop;
+    private readonly InputAction m_UI_MousePosition;
     public struct UIActions
     {
         private @PlayerAction m_Wrapper;
         public UIActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @OpenCataloge => m_Wrapper.m_UI_OpenCataloge;
         public InputAction @OpenShop => m_Wrapper.m_UI_OpenShop;
+        public InputAction @MousePosition => m_Wrapper.m_UI_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -465,6 +488,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @OpenShop.started += instance.OnOpenShop;
             @OpenShop.performed += instance.OnOpenShop;
             @OpenShop.canceled += instance.OnOpenShop;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -475,6 +501,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @OpenShop.started -= instance.OnOpenShop;
             @OpenShop.performed -= instance.OnOpenShop;
             @OpenShop.canceled -= instance.OnOpenShop;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -602,6 +631,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     {
         void OnOpenCataloge(InputAction.CallbackContext context);
         void OnOpenShop(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
     public interface IFishSellerActions
     {

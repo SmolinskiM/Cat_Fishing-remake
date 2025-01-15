@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: FishingLineLength
   m_EditorClassIdentifier: Assembly-CSharp::FishingLineLength
-  description: +15 max distance
-  price: 200
+  description: Distance increased by 15
+  price: 500
   levelUpgradeMax: 3
   maxDistance: 15
