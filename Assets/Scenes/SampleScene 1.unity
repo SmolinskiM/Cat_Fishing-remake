@@ -5521,7 +5521,7 @@ MonoBehaviour:
   goToCity: {fileID: 1049015601}
   fishSpawner: {fileID: 1724459816}
   goldFish: {fileID: 11400000, guid: a6fdbe09f7740054598cb88c7a58aefa, type: 2}
-  dialogManager: {fileID: 0}
+  dialogManager: {fileID: 641946996}
 --- !u!4 &1739192322
 Transform:
   m_ObjectHideFlags: 0
@@ -6695,7 +6695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
