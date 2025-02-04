@@ -11,6 +11,7 @@ public class FishSprite : MonoBehaviour
     {
         fishMovement = GetComponent<FishMovement>(); 
         fishSprite = GetComponent<SpriteRenderer>();
+        fishMovement.onCautchFish += FishOnHookSprite;
     }
 
     private void Update()
@@ -18,30 +19,26 @@ public class FishSprite : MonoBehaviour
         FlipSprite(fishMovement.Target);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void FishOnHookSprite()
     {
-        if (collision.GetComponent<Hook>())
-        {
-            if(fishMovement.IsFishOnHook)
-            {
-                transform.eulerAngles = new Vector3(0, 0, -90);
-                fishSprite.flipX = false;
-            }
-        }
+        transform.eulerAngles = new Vector3(0, 0, 90);
+        fishSprite.flipY = true;
     }
 
     private void FlipSprite(Vector2 target)
     {
-        if(!fishMovement.IsFishOnHook)
+        if(fishMovement.IsFishOnHook)
         {
-            if (target.x < transform.position.x)
-            {
-                fishSprite.flipX = false;
-            }
-            else
-            {
-                fishSprite.flipX = true;
-            }
+            return;
+        }
+
+        if (target.x < transform.position.x)
+        {
+            fishSprite.flipX = false;
+        }
+        else
+        {
+            fishSprite.flipX = true;
         }
     }
 }

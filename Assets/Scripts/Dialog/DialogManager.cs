@@ -97,6 +97,7 @@ public class DialogManager : MonoBehaviour
         else if (currentDialog.nextDialog != null)
         {
             onNextButtonClicked?.Invoke();
+            ClearEvents();
             StartDialog(currentDialog.nextDialog);
         }
         else
@@ -111,6 +112,7 @@ public class DialogManager : MonoBehaviour
         if (currentDialog == null || currentDialog.altDialog == null) return;
 
         onAltButtonClicked?.Invoke();
+        ClearEvents();
         StartDialog(currentDialog.altDialog);
     }
 
@@ -118,8 +120,14 @@ public class DialogManager : MonoBehaviour
     {
         Debug.Log("Ending dialog");
         dialogCanvas.gameObject.SetActive(false);
-        displayedText.text = "";
+        displayedText.text = "End";
         speakerImage.sprite = null;
         speakerImage.enabled = false;
+    }
+
+    private void ClearEvents()
+    {
+        onAltButtonClicked = null;
+        onNextButtonClicked = null;
     }
 }

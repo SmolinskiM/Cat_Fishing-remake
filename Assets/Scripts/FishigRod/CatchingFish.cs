@@ -27,7 +27,7 @@ public class CatchingFish: MonoBehaviour
 
     [Header("Dialog Option")]
 
-    private DialogData catchingGoldFish;
+    [SerializeField] private DialogData catchingGoldFish;
 
     private void Start()
     {

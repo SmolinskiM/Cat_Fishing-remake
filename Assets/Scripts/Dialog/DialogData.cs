@@ -7,27 +7,27 @@ public class DialogData : ScriptableObject
     [System.Serializable]
     public class DialogEntry
     {
-        public string speaker; // Osoba, która mówi
+        public string speaker;
         [TextArea]
-        public string text; // Tekst dialogu
+        public string text;
     }
 
     [Header("Dialog Entries")]
-    public List<DialogEntry> dialogEntries = new List<DialogEntry>(); // Lista tekstów dialogowych
+    public List<DialogEntry> dialogEntries = new List<DialogEntry>();
 
     [System.Serializable]
     public class SpeakerSprite
     {
-        public string speakerName; // Nazwa osoby
-        public Sprite sprite; // Sprite osoby
+        public string speakerName;
+        public Sprite sprite;
     }
-    public List<SpeakerSprite> speakerSpriteList = new List<SpeakerSprite>(); // Lista speakerów i ich sprite'ów
+    public List<SpeakerSprite> speakerSpriteList = new List<SpeakerSprite>();
 
     [Header("Next Dialogs")]
-    public DialogData nextDialog; // Nastêpny dialog
-    public DialogData altDialog; // Alternatywny dialog
+    public DialogData nextDialog;
+    public DialogData altDialog;
 
     [Header("Button Texts")]
-    public string nextButtonText = "Next"; // Tekst na przycisku nextDialog
-    public string altButtonText = "Alternative"; // Tekst na przycisku altDialog
+    public string nextButtonText = "Next";
+    public string altButtonText = "Alternative";
 }

@@ -39,7 +39,6 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     public void OnRealease(T _object)
     {
         _object.gameObject.SetActive(false);
-        Debug.Log("xd");
         OnRealeaseObject?.Invoke();
     }
 
