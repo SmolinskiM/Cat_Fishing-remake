@@ -2295,7 +2295,7 @@ MonoBehaviour:
   isPossibleToSpawnGoldFish: 0
   fishMax: 10
   fish:
-  - {fileID: 11400000, guid: 839274244c61ade46b8697b378eaf006, type: 2}
+  - {fileID: 11400000, guid: c84ba12164b41ff40b243f7eacf1ea16, type: 2}
   fishPrefab: {fileID: 3961077801025956262, guid: 2132d595ae5f82e49a4611a89aaa06e6, type: 3}
   goldFish: {fileID: 0}
   fishParent: {fileID: 2050953552}
@@ -6484,7 +6484,7 @@ Transform:
   m_GameObject: {fileID: 1912225934}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.099999905, y: -0.25, z: 0}
+  m_LocalPosition: {x: -0.11, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6695,7 +6695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5650938, g: 0.8037735, b: 0.22899963, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

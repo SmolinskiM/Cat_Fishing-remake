@@ -34,6 +34,7 @@ public class FishMovement : MonoBehaviour
     private void OnEnable()
     {
         IsFishOnHook = false;
+        currentState = FishState.Swimming;
     }
 
     private void Update()

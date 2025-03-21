@@ -27,7 +27,6 @@ public class DisplayDescription: MonoBehaviour, IPointerEnterHandler, IPointerEx
     private void Start()
     {
         rectTransform = descriptionBg.GetComponent<RectTransform>();
-        ofset = new Vector3(descriptionBg.GetComponent<RectTransform>().rect.width, 0, 0);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

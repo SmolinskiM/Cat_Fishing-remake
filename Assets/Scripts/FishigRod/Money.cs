@@ -3,7 +3,7 @@
 public class Money : SingletoneMonobehaviour<Money>
 {
     public Action onMoneyChange;
-    private int moneyHaving;
+    private int moneyHaving = 10000;
     
     public int MoneyHaving { get { return moneyHaving; } }
 
